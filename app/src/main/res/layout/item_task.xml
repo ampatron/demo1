@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="task"
+            type="com.uxr.demo.one.models.Task" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="183dp"
+                bind:imageUrl="@{task.images.size > 0 ? task.images.get(0): null}"
+                tools:src="@drawable/task_thumb" />
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    bind:imageUrl="@{task.company.logos.size > 0 ? task.company.logos.get(0) : null}"
+                    tools:src="@drawable/company_logo" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_marginLeft="8dp"
+                    android:layout_height="match_parent"
+                    android:text="@{task.company.name}"
+                    tools:text="SERENITY" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_height="wrap_content"
+                android:text="@{task.title}"
+                tools:text="与好友分享SERENITY最高可得8折优惠" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>
