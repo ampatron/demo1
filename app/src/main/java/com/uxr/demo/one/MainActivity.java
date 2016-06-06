@@ -13,6 +13,7 @@ import java.util.List;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -46,25 +47,24 @@ public class MainActivity extends AppCompatActivity {
         MooApi mooTask = retrofit.create(MooApi.class);
         mooTask.getTasks(0, MAX_ITEMS_PER_LOAD)
                 .subscribeOn(Schedulers.io())
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.v(TAG, "");
-                    }
-                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Log.v(TAG, "error : " + throwable.getMessage());
-                    }
-                })
-                .subscribe(new Action1<List<Task>>() {
-                    @Override
-                    public void call(List<Task> tasks) {
-                        refresh(tasks);
-                    }
-                });
+                .subscribe(new Subscriber<List<Task>>() {
+                               @Override
+                               public final void onCompleted() {
+                                   // do nothing
+                               }
+
+                               @Override
+                               public final void onError(Throwable throwable) {
+                                   Log.v(TAG, "error : " + throwable.getMessage());
+                               }
+
+                               @Override
+                               public final void onNext(List<Task> tasks) {
+                                   refresh(tasks);
+                               }
+                           }
+                );
     }
 
     private void refresh(List<Task> tasks) {
