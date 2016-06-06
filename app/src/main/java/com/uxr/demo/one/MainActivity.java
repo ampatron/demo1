@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.uxr.demo.one.models.Task;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                                @Override
                                public final void onError(Throwable throwable) {
-                                   Log.v(TAG, "error : " + throwable.getMessage());
+                                   Toast.makeText(MainActivity.this, "Make sure you are connected to the network.", Toast.LENGTH_SHORT).show();
                                }
 
                                @Override
